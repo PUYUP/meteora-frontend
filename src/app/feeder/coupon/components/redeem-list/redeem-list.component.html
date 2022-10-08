@@ -1,0 +1,128 @@
+<div class="container">
+  <div class="row">
+    <div class="col-12 col-sm-12 col-md-12 col-lg-12 col-xl-7">
+      <div class="d-flex w-100 align-items-center mb-2">
+        <h3 class="mb-0">Permintaan Redeem Kupon</h3>
+      </div>
+
+      <mat-form-field appearance="outline" class="w-100">
+        <mat-label>Cari kode kupon</mat-label>
+        <input
+          matInput
+          type="text"
+          placeholder="Contoh: BL09df"
+          (input)="listenIdentifier($event)"
+        />
+      </mat-form-field>
+
+      <ng-container *ngIf="redeem$ | async as redeem">
+        <div class="mb-4">
+          <mat-accordion>
+            <ng-container *ngFor="let item of redeem?.data?.results">
+              <mat-expansion-panel>
+                <mat-expansion-panel-header class="d-flex">
+                  <mat-panel-title>
+                    <div class="d-flex w-100 align-items-center">
+                      <mat-icon *ngIf="item.is_taken" class="text-success">
+                        task_alt
+                      </mat-icon>
+                      <mat-icon *ngIf="!item.is_taken" class="text-muted">
+                        radio_button_unchecked
+                      </mat-icon>
+                      <span class="ms-3">{{ item?.coupon_identifier }}</span>
+                    </div>
+                  </mat-panel-title>
+                </mat-expansion-panel-header>
+
+                <div>
+                  <table class="table">
+                    <tbody>
+                      <tr class="bg-light">
+                        <td>Jumlah</td>
+                        <td>{{ item.coupon_reward.amount }}</td>
+                      </tr>
+
+                      <tr class="bg-light">
+                        <td>Satuan</td>
+                        <td>
+                          {{ item.coupon_reward.unit_slug }}
+                          ({{ item.coupon_reward.unit_label }})
+                        </td>
+                      </tr>
+
+                      <tr>
+                        <td>Provider</td>
+                        <td>{{ item.coupon_reward.provider }}</td>
+                      </tr>
+
+                      <tr>
+                        <td>Label</td>
+                        <td>{{ item.coupon_reward.label }}</td>
+                      </tr>
+
+                      <tr>
+                        <td>Keterangan</td>
+                        <td>{{ item.coupon_reward.description }}</td>
+                      </tr>
+
+                      <tr>
+                        <td>Syarat & Ketentuan</td>
+                        <td>{{ item.coupon_reward.term }}</td>
+                      </tr>
+
+                      <tr>
+                        <td>Mulai</td>
+                        <td>
+                          {{ item.coupon_reward.start_at | date: "medium" }}
+                        </td>
+                      </tr>
+
+                      <tr>
+                        <td>Sampai</td>
+                        <td>
+                          {{ item.coupon_reward.expiry_at | date: "medium" }}
+                        </td>
+                      </tr>
+
+                      <tr>
+                        <td>Tipe</td>
+                        <td>{{ item.coupon_reward.type }}</td>
+                      </tr>
+                    </tbody>
+                  </table>
+
+                  <button
+                    *ngIf="!item.is_taken"
+                    mat-raised-button
+                    color="primary"
+                    (click)="markTaken(item)"
+                  >
+                    <mat-icon>done_all</mat-icon>
+                    <span class="ps-2">Tandai digunakan</span>
+                  </button>
+
+                  <div
+                    *ngIf="item.is_taken"
+                    class="text-success d-flex align-items-center"
+                  >
+                    <mat-icon>task_alt</mat-icon>
+                    <span class="ps-2">Sudah digunakan</span>
+                  </div>
+                </div>
+              </mat-expansion-panel>
+            </ng-container>
+          </mat-accordion>
+        </div>
+
+        <mat-paginator
+          [disabled]="redeem?.status == 'loading'"
+          [length]="redeem?.data?.total"
+          [pageSize]="pageSize"
+          (page)="pageChangeEvent($event, redeem?.data)"
+          aria-label="Select page"
+        >
+        </mat-paginator>
+      </ng-container>
+    </div>
+  </div>
+</div>

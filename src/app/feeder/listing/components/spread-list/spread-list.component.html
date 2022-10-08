@@ -1,0 +1,72 @@
+<div class="d-flex w-100 align-items-center pt-4 mb-4 pb-4 border-bottom">
+  <div>Link dan QR Code</div>
+  <button
+    type="button"
+    mat-raised-button
+    color="primary"
+    class="ms-auto"
+    (click)="addSpread(fragment)"
+  >
+    <mat-icon>add</mat-icon>
+    <span class="ms-2">Tambah</span>
+  </button>
+</div>
+
+<p class="text-muted">
+  Sebarkan link atau QR Code kepada siapa saja yang sesuai target bisnis Anda.
+  Bisa pelanggan baru dan lainnya.
+</p>
+
+<ng-container *ngIf="spread$ | async as spread">
+  <p
+    *ngIf="spread?.status == 'loading' && spread?.action == 'load'"
+    class="text-center"
+  >
+    Memuat data...
+  </p>
+
+  <p *ngIf="spread?.data?.results?.length == 0" class="text-center">
+    Belum ada link
+  </p>
+
+  <ng-container *ngIf="spread?.data?.results?.length > 0">
+    <mat-list class="mb-4">
+      <mat-list-item
+        *ngFor="let item of spread?.data?.results"
+        [routerLink]="['/feeder/spread', item.uuid]"
+      >
+        <div class="d-flex w-100 ps-3 align-items-center">
+          <div class="d-flex w-100 flex-column">
+            <div mat-line>{{ item.url }}</div>
+            <div mat-line class="text-muted small">
+              Aktif sampai: {{ item.expiry_at | date: "dd LLLL YYYY" }}
+            </div>
+            <div mat-line class="text-muted small">
+              Alokasi: {{ item.allocation }} saran
+            </div>
+          </div>
+
+          <div class="ms-auto">
+            <div
+              class="ratio ratio-1x1 ms-auto me-auto"
+              [ngStyle]="{ width: '60px' }"
+            >
+              <img [src]="item.qrcode" />
+            </div>
+          </div>
+        </div>
+
+        <mat-icon mat-list-icon class="text-muted">link</mat-icon>
+      </mat-list-item>
+    </mat-list>
+  </ng-container>
+
+  <mat-paginator
+    [disabled]="spread?.status == 'loading'"
+    [length]="spread?.data?.total"
+    [pageSize]="pageSize"
+    (page)="pageChangeEvent($event, spread?.data)"
+    aria-label="Select page"
+  >
+  </mat-paginator>
+</ng-container>

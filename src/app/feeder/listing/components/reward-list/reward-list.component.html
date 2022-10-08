@@ -1,0 +1,65 @@
+<div class="d-flex w-100 align-items-center pt-4 mb-4 pb-4 border-bottom">
+  <div>Hadiah</div>
+  <button
+    type="button"
+    mat-raised-button
+    color="primary"
+    class="ms-auto"
+    (click)="addReward(fragment)"
+  >
+    <mat-icon>add</mat-icon>
+    <span class="ms-2">Tambah</span>
+  </button>
+</div>
+
+<p class="text-muted">
+  Gunakan fitur ini untuk menarik pelanggan memberikan saran. Bisa diskon, buy 1
+  get 2 atau lainnya tergantung kebutuhan bisnis Anda. Hadiah tidak harus
+  diberikan.
+</p>
+
+<ng-container *ngIf="reward$ | async as reward">
+  <p
+    *ngIf="reward?.status == 'loading' && reward?.action == 'load'"
+    class="text-center"
+  >
+    Memuat data...
+  </p>
+
+  <p *ngIf="reward?.data?.results?.length == 0" class="text-center">
+    Belum ada hadiah
+  </p>
+
+  <ng-container *ngIf="reward?.data?.results?.length > 0">
+    <mat-list class="mb-4">
+      <mat-list-item
+        *ngFor="let item of reward?.data?.results"
+        [routerLink]="['/feeder/reward', item.uuid]"
+      >
+        <div class="d-flex w-100 ps-3 align-items-center">
+          <div class="d-flex w-100 flex-column">
+            <div mat-line>{{ item.label }}</div>
+            <div mat-line class="text-muted small">
+              Berlaku: {{ item.start_at | date: "dd LLLL YYYY" }} &mdash;
+              {{ item.expiry_at | date: "dd LLLL YYYY" }}
+            </div>
+            <div mat-line class="text-muted small">
+              Alokasi: {{ item.allocation }} saran
+            </div>
+          </div>
+        </div>
+
+        <mat-icon mat-list-icon class="text-muted">redeem</mat-icon>
+      </mat-list-item>
+    </mat-list>
+  </ng-container>
+
+  <mat-paginator
+    [disabled]="reward?.status == 'loading'"
+    [length]="reward?.data?.total"
+    [pageSize]="pageSize"
+    (page)="pageChangeEvent($event, reward?.data)"
+    aria-label="Select page"
+  >
+  </mat-paginator>
+</ng-container>

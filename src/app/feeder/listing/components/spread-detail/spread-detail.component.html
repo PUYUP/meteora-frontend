@@ -1,0 +1,153 @@
+<div class="container">
+  <div class="row">
+    <div class="col-12 col-sm-12 col-md-12 col-lg-12 col-xl-7">
+      <div class="d-flex align-items-center mb-3">
+        <button mat-icon-button class="me-2" (click)="back()">
+          <mat-icon>arrow_back</mat-icon>
+        </button>
+        <h3 class="mb-0">Rincian Link / QR Code</h3>
+      </div>
+
+      <ng-container *ngIf="spread$ | async as spread">
+        <ng-container *ngIf="spread?.data?.uuid">
+          <mat-card>
+            <table class="table">
+              <tbody>
+                <tr>
+                  <td class="w-25">URL</td>
+                  <td>{{ spread?.data?.url }}</td>
+                </tr>
+
+                <tr>
+                  <td class="w-25">Aktif sampai</td>
+                  <td>
+                    {{ spread?.data?.expiry_at | date: "dd LLLL YYYY" }}
+                  </td>
+                </tr>
+
+                <tr>
+                  <td class="w-25">Maksimal</td>
+                  <td>
+                    {{
+                      spread?.data?.allocation == 0
+                        ? "Tanpa batas"
+                        : spread?.data?.allocation + " saran"
+                    }}
+                  </td>
+                </tr>
+
+                <tr>
+                  <td class="w-25">Produk</td>
+                  <td>{{ spread?.data?.product }}</td>
+                </tr>
+
+                <tr>
+                  <td class="w-25">Fragmen</td>
+                  <td>{{ spread?.data?.content_object_label }}</td>
+                </tr>
+
+                <tr>
+                  <td class="w-25">Pengantar</td>
+                  <td>
+                    {{
+                      spread?.data?.introduction
+                        ? spread?.data?.introduction
+                        : "-"
+                    }}
+                  </td>
+                </tr>
+
+                <!--
+                <tr>
+                  <td class="w-25">QR Code</td>
+                  <td>
+                    <div
+                      id="print-section"
+                      class="ratio ratio-1x1"
+                      [ngStyle]="{ width: '160px' }"
+                    >
+                      <img
+                        class="border"
+                        *ngIf="spread?.status != 'loading'"
+                        [src]="spread?.data?.qrcode"
+                      />
+                    </div>
+
+                    {{ spread?.data?.shorturl }}
+                  </td>
+                </tr>
+                -->
+
+                <tr>
+                  <td class="w-25">Bagikan</td>
+                  <td>
+                    <div
+                      #printEl
+                      class="d-flex d-print-flex align-items-center"
+                    >
+                      <div
+                        class="ratio ratio-1x1"
+                        [ngStyle]="{ width: '110px' }"
+                      >
+                        <img
+                          class="border"
+                          *ngIf="spread?.status != 'loading'"
+                          [src]="spread?.data?.qrcode"
+                        />
+                      </div>
+
+                      <div class="ms-3">
+                        <h4 class="fw-bold mb-0">
+                          {{ spread?.data?.product }}
+                        </h4>
+                        <p class="mb-0">Kirim ulasan dan saran Anda</p>
+                        <p class="mb-0">Scan QR atau kunjungi:</p>
+                        <p class="fw-bold mb-0">{{ spread?.data?.url }}</p>
+                      </div>
+                    </div>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+
+            <div class="d-flex w-100">
+              <button
+                type="button"
+                mat-button
+                color="warn"
+                [disabled]="spread?.status == 'loading'"
+                (click)="delete(spread?.data?.uuid)"
+              >
+                Hapus
+              </button>
+
+              <div class="ms-auto">
+                <button
+                  type="button"
+                  mat-button
+                  printSectionId="print-section"
+                  (click)="printQR(spread?.data?.product)"
+                  [disabled]="spread?.status == 'loading'"
+                >
+                  Download QR Code
+                </button>
+
+                <button
+                  type="button"
+                  mat-button
+                  color="primary"
+                  class="ms-2"
+                  (click)="edit(spread?.data)"
+                  [disabled]="spread?.status == 'loading'"
+                >
+                  Sunting
+                </button>
+              </div>
+            </div>
+          </mat-card>
+        </ng-container>
+      </ng-container>
+    </div>
+  </div>
+  &nbsp;
+</div>

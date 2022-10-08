@@ -1,0 +1,68 @@
+<div class="container">
+  <div class="row">
+    <div class="col-12 col-sm-12 col-md-12 col-lg-12 col-xl-7">
+      <div class="d-flex align-items-center mb-3">
+        <button mat-icon-button class="me-2" (click)="back()">
+          <mat-icon>arrow_back</mat-icon>
+        </button>
+        <h3 class="mb-0">Rincian Saran</h3>
+      </div>
+
+      <ng-container *ngIf="suggest$ | async as suggest">
+        <ng-container *ngIf="suggest?.data?.uuid">
+          <mat-card>
+            <table class="table">
+              <tbody>
+                <tr>
+                  <td class="w-25">Produk</td>
+                  <td>{{ suggest?.data?.product_label }}</td>
+                </tr>
+
+                <tr>
+                  <td class="w-25">Canal</td>
+                  <td>
+                    <div *ngIf="suggest?.data?.canals?.length > 0" mat-line>
+                      <ng-container *ngFor="let canal of suggest?.data?.canals">
+                        <div>{{ canal.method }} : {{ canal.value }}</div>
+                      </ng-container>
+                    </div>
+                  </td>
+                </tr>
+
+                <tr>
+                  <td class="w-25">Rating</td>
+                  <td>{{ suggest?.data?.rating }}</td>
+                </tr>
+
+                <tr>
+                  <td class="w-25">Komentar</td>
+                  <td>{{ suggest?.data?.description }}</td>
+                </tr>
+              </tbody>
+            </table>
+
+            <div class="d-flex w-100">
+              <button
+                type="button"
+                mat-stroked-button
+                color="primary"
+                class="ms-auto"
+                (click)="leaveRespond()"
+                [disabled]="suggest?.status == 'loading'"
+              >
+                <mat-icon>add_comment</mat-icon>
+                <span class="ms-1">Tanggapi</span>
+              </button>
+            </div>
+          </mat-card>
+        </ng-container>
+      </ng-container>
+
+      <div class="d-flex w-100 align-items-center pt-4 mb-4 pb-2 border-bottom">
+        <div>Interaksi</div>
+      </div>
+
+      <app-interaction-list [suggest_uuid]="uuid"></app-interaction-list>
+    </div>
+  </div>
+</div>

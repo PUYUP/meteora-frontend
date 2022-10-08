@@ -1,0 +1,48 @@
+<div class="d-flex w-100 align-items-center pt-4 mb-4 pb-4 border-bottom">
+  <div>Daftar Produk</div>
+  <button
+    type="button"
+    mat-raised-button
+    color="primary"
+    class="ms-auto"
+    (click)="addProduct(listing_uuid)"
+  >
+    <mat-icon>add</mat-icon>
+    <span class="ms-2">Tambah</span>
+  </button>
+</div>
+
+<ng-container *ngIf="product$ | async as product">
+  <p
+    *ngIf="product?.status == 'loading' && product?.action == 'load'"
+    class="text-center"
+  >
+    Memuat daftar produk...
+  </p>
+
+  <p *ngIf="product?.data?.results?.length == 0" class="text-center">
+    Belum ada produk
+  </p>
+
+  <ng-container *ngIf="product?.data?.results?.length > 0">
+    <mat-list class="mb-4">
+      <mat-list-item
+        *ngFor="let item of product?.data?.results"
+        [routerLink]="['/feeder/product', item.uuid]"
+      >
+        <div mat-line>{{ item.label }}</div>
+        <div *ngIf="item.description" mat-line>{{ item.description }}</div>
+        <mat-icon mat-list-icon class="text-muted">ballot</mat-icon>
+      </mat-list-item>
+    </mat-list>
+  </ng-container>
+
+  <mat-paginator
+    [disabled]="product?.status == 'loading'"
+    [length]="product?.data?.total"
+    [pageSize]="pageSize"
+    (page)="pageChangeEvent($event, product?.data)"
+    aria-label="Select page"
+  >
+  </mat-paginator>
+</ng-container>

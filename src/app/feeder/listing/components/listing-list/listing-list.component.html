@@ -1,0 +1,55 @@
+<div class="container">
+  <div class="row">
+    <div class="col-12 col-sm-12 col-md-12 col-lg-12 col-xl-7">
+      <div class="d-flex align-items-center border-bottom pb-3 mb-3">
+        <h3 class="mb-0">Daftar Bisnis</h3>
+        <button
+          mat-raised-button
+          color="primary"
+          class="ms-auto"
+          (click)="addListing()"
+        >
+          <mat-icon>add</mat-icon>
+          <span class="ps-2">Tambah</span>
+        </button>
+      </div>
+
+      <ng-container *ngIf="listing$ | async as listing">
+        <p
+          *ngIf="listing?.status == 'loading' && listing?.action == 'load'"
+          class="text-center"
+        >
+          Memuat daftar bisnis...
+        </p>
+
+        <p *ngIf="listing?.data?.results?.length == 0" class="text-center">
+          Belum ada bisnis. Tambahkan segera.
+        </p>
+
+        <ng-container *ngIf="listing?.data?.results?.length > 0">
+          <mat-list class="mb-4">
+            <mat-list-item
+              *ngFor="let item of listing?.data?.results"
+              [routerLink]="['/feeder/listing', item.uuid]"
+            >
+              <div mat-line>{{ item.label }}</div>
+              <div *ngIf="item.description" mat-line>
+                {{ item.description }}
+              </div>
+              <mat-icon mat-list-icon class="text-muted">store</mat-icon>
+            </mat-list-item>
+          </mat-list>
+        </ng-container>
+
+        <mat-paginator
+          [disabled]="listing?.status == 'loading'"
+          [length]="listing?.data?.total"
+          [pageSize]="pageSize"
+          (page)="pageChangeEvent($event, listing?.data)"
+          aria-label="Select page"
+        >
+        </mat-paginator>
+      </ng-container>
+    </div>
+  </div>
+</div>

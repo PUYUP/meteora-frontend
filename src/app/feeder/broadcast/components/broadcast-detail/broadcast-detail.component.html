@@ -1,0 +1,102 @@
+<div class="container">
+  <div class="row">
+    <div class="col-12 col-sm-12 col-md-12 col-lg-12 col-xl-7">
+      <div class="d-flex align-items-center mb-3">
+        <button mat-icon-button class="me-2" (click)="back()">
+          <mat-icon>arrow_back</mat-icon>
+        </button>
+        <h3 class="mb-0">Rincian Broadcast</h3>
+      </div>
+
+      <ng-container *ngIf="broadcast$ | async as broadcast">
+        <mat-card>
+          <table class="table">
+            <tbody>
+              <tr class="bg-light">
+                <td class="w-25">Bisnis</td>
+                <td>
+                  {{
+                    broadcast?.data?.listing_label
+                      ? broadcast?.data?.listing_label
+                      : "&mdash;"
+                  }}
+                </td>
+              </tr>
+
+              <tr class="bg-light">
+                <td class="w-25">Produk</td>
+                <td>
+                  {{
+                    broadcast?.data?.product_label
+                      ? broadcast?.data?.product_label
+                      : "&mdash;"
+                  }}
+                </td>
+              </tr>
+
+              <tr class="bg-light">
+                <td class="w-25">Fragmen</td>
+                <td>
+                  {{
+                    broadcast?.data?.fragment_label
+                      ? broadcast?.data?.fragment_label
+                      : "&mdash;"
+                  }}
+                </td>
+              </tr>
+
+              <tr>
+                <td class="w-25">Nama broadcast</td>
+                <td>{{ broadcast?.data?.label }}</td>
+              </tr>
+
+              <tr>
+                <td class="w-25">Pesan ke pelanggan</td>
+                <td>
+                  {{
+                    broadcast?.data?.message
+                      ? broadcast?.data?.message
+                      : "&mdash;"
+                  }}
+                </td>
+              </tr>
+
+              <tr>
+                <td class="w-25">Keterangan</td>
+                <td>
+                  {{
+                    broadcast?.data?.description
+                      ? broadcast?.data?.description
+                      : "&mdash;"
+                  }}
+                </td>
+              </tr>
+            </tbody>
+          </table>
+
+          <div class="d-flex w-100">
+            <button
+              type="button"
+              mat-button
+              color="warn"
+              [disabled]="broadcast?.status == 'loading'"
+              (click)="delete(broadcast?.data?.uuid)"
+            >
+              Hapus
+            </button>
+            <button
+              type="button"
+              mat-button
+              color="primary"
+              class="ms-auto"
+              (click)="edit(broadcast?.data)"
+              [disabled]="broadcast?.status == 'loading'"
+            >
+              Sunting
+            </button>
+          </div>
+        </mat-card>
+      </ng-container>
+    </div>
+  </div>
+</div>

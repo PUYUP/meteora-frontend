@@ -1,0 +1,89 @@
+<div class="container">
+  <div class="row">
+    <div class="col-12 col-sm-12 col-md-12 col-lg-12 col-xl-7">
+      <div class="d-flex align-items-center mb-3">
+        <button mat-icon-button class="me-2" (click)="back()">
+          <mat-icon>arrow_back</mat-icon>
+        </button>
+        <h3 class="mb-0">Rincian Fragmen</h3>
+      </div>
+
+      <ng-container *ngIf="fragment$ | async as fragment">
+        <ng-container *ngIf="fragment?.data?.uuid">
+          <mat-card>
+            <table class="table">
+              <tbody>
+                <tr>
+                  <td class="w-25">Nama</td>
+                  <td>{{ fragment?.data?.label }}</td>
+                </tr>
+
+                <tr>
+                  <td class="w-25">Dari</td>
+                  <td>
+                    {{ fragment?.data?.start_at | date: "dd LLLL YYYY" }}
+                  </td>
+                </tr>
+
+                <tr>
+                  <td class="w-25">Sampai</td>
+                  <td>
+                    {{ fragment?.data?.expiry_at | date: "dd LLLL YYYY" }}
+                  </td>
+                </tr>
+
+                <tr>
+                  <td class="w-25">Keterangan</td>
+                  <td>
+                    {{
+                      fragment?.data?.description
+                        ? fragment?.data?.description
+                        : "&mdash;"
+                    }}
+                  </td>
+                </tr>
+
+                <tr>
+                  <td class="w-25">Produk</td>
+                  <td>{{ fragment?.data?.product_label }}</td>
+                </tr>
+              </tbody>
+            </table>
+
+            <div class="d-flex w-100">
+              <button
+                type="button"
+                mat-button
+                color="warn"
+                [disabled]="fragment?.status == 'loading'"
+                (click)="delete(fragment?.data?.uuid)"
+              >
+                Hapus
+              </button>
+              <button
+                type="button"
+                mat-button
+                color="primary"
+                class="ms-auto"
+                (click)="edit(fragment?.data)"
+                [disabled]="fragment?.status == 'loading'"
+              >
+                Sunting
+              </button>
+            </div>
+          </mat-card>
+
+          <app-reward-list
+            [fragment]="fragment?.data"
+            [fragment_uuid]="fragmentUUID"
+          ></app-reward-list>
+
+          <app-spread-list
+            [fragment]="fragment?.data"
+            [fragment_uuid]="fragmentUUID"
+          ></app-spread-list>
+        </ng-container>
+      </ng-container>
+    </div>
+  </div>
+</div>

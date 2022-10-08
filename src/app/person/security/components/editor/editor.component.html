@@ -1,0 +1,51 @@
+<ng-container *ngIf="userData$ | async as userData">
+  <mat-form-field appearance="outline" class="w-100">
+    <mat-label>Nama pengguna</mat-label>
+    <input
+      matInput
+      [(ngModel)]="username"
+      placeholder="Harus unik. Contoh: jaka123"
+      (change)="usernameChange($event)"
+    />
+
+    <button
+      type="button"
+      mat-icon-button
+      matSuffix
+      [disabled]="
+        userData?.data?.user?.username == this.username ||
+        userData?.status == 'loading' ||
+        securecodeStatus == 'loading'
+      "
+      (click)="securitySave('username')"
+    >
+      <mat-icon>arrow_forward</mat-icon>
+    </button>
+  </mat-form-field>
+
+  <mat-form-field appearance="outline" class="w-100">
+    <mat-label>Alamat email</mat-label>
+    <input
+      matInput
+      [(ngModel)]="email"
+      (change)="emailChange($event)"
+      placeholder="Alamat email Anda"
+      type="email"
+    />
+
+    <button
+      type="button"
+      mat-icon-button
+      matSuffix
+      [disabled]="
+        userData?.data?.user?.email == this.email ||
+        securecodeStatus == 'loading'
+      "
+      (click)="securitySave('email')"
+    >
+      <mat-icon>arrow_forward</mat-icon>
+    </button>
+  </mat-form-field>
+
+  <app-change-password></app-change-password>
+</ng-container>

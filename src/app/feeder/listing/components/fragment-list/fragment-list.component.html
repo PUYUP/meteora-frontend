@@ -1,0 +1,58 @@
+<div class="d-flex w-100 align-items-center pt-4 mb-4 pb-4 border-bottom">
+  <div>Daftar Fragmen</div>
+  <button
+    type="button"
+    mat-raised-button
+    color="primary"
+    class="ms-auto"
+    (click)="addFragment(product_uuid)"
+  >
+    <mat-icon>add</mat-icon>
+    <span class="ms-2">Tambah</span>
+  </button>
+</div>
+
+<p>
+  Dengan fragmen Anda bisa membagi reward dengan syarat berbeda-beda pada momen
+  tertentu.
+</p>
+
+<ng-container *ngIf="fragment$ | async as fragment">
+  <p
+    *ngIf="fragment?.status == 'loading' && fragment?.action == 'load'"
+    class="text-center"
+  >
+    Memuat daftar fragmen...
+  </p>
+
+  <p *ngIf="fragment?.data?.results?.length == 0" class="text-center">
+    Belum ada fragmen
+  </p>
+
+  <ng-container *ngIf="fragment?.data?.results?.length > 0">
+    <mat-list class="mb-4">
+      <mat-list-item
+        *ngFor="let item of fragment?.data?.results"
+        [routerLink]="['/feeder/fragment', item.uuid]"
+      >
+        <div mat-line>{{ item.label }}</div>
+        <div *ngIf="item.expiry_at" mat-line class="text-muted">
+          Aktif sampai {{ item.expiry_at | date: "dd LLLL YYYY" }}
+        </div>
+        <div *ngIf="item.description" mat-line class="text-muted">
+          {{ item.description }}
+        </div>
+        <mat-icon mat-list-icon class="text-muted">extension</mat-icon>
+      </mat-list-item>
+    </mat-list>
+  </ng-container>
+
+  <mat-paginator
+    [disabled]="fragment?.status == 'loading'"
+    [length]="fragment?.data?.total"
+    [pageSize]="pageSize"
+    (page)="pageChangeEvent($event, fragment?.data)"
+    aria-label="Select page"
+  >
+  </mat-paginator>
+</ng-container>

@@ -1,0 +1,34 @@
+<ng-container *ngIf="listing$ | async as listing">
+  <p
+    *ngIf="listing?.status == 'loading' && listing?.action == 'load'"
+    class="text-center"
+  >
+    Memuat daftar bisnis...
+  </p>
+
+  <p *ngIf="listing?.data?.results?.length == 0" class="text-center">
+    Belum ada bisnis. Tambahkan segera.
+  </p>
+
+  <ng-container *ngIf="listing?.data?.results?.length > 0">
+    <mat-list class="mb-4">
+      <mat-list-item
+        *ngFor="let item of listing?.data?.results"
+        [routerLink]="['/feeder/listing', item.uuid]"
+      >
+        <div mat-line>{{ item.label }}</div>
+        <div *ngIf="item.description" mat-line>{{ item.description }}</div>
+        <mat-icon mat-list-icon class="text-muted">store</mat-icon>
+      </mat-list-item>
+    </mat-list>
+  </ng-container>
+
+  <mat-paginator
+    [disabled]="listing?.status == 'loading'"
+    [length]="listing?.data?.total"
+    [pageSize]="pageSize"
+    (page)="pageChangeEvent($event, listing?.data)"
+    aria-label="Select page"
+  >
+  </mat-paginator>
+</ng-container>

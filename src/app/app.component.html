@@ -1,0 +1,70 @@
+<app-header (menuEvent)="receiveMenuEvent($event)"></app-header>
+
+<mat-drawer-container [hasBackdrop]="false">
+  <mat-drawer
+    [mode]="currentScreenSize == 'Small' ? 'over' : 'side'"
+    [opened]="
+      currentScreenSize == 'Small' ? opened && isLoggedIn : true && isLoggedIn
+    "
+    [ngStyle]="{ width: '250px', 'padding-top': '64px' }"
+    (closedStart)="menuClose($event)"
+    class="position-fixed"
+  >
+    <mat-list role="list">
+      <mat-list-item
+        role="listitem"
+        [routerLink]="['/home']"
+        routerLinkActive="bg-light"
+      >
+        <mat-icon mat-list-icon>home</mat-icon>
+        <div mat-line>Beranda</div>
+      </mat-list-item>
+
+      <mat-list-item
+        role="listitem"
+        [routerLink]="['/feeder/listing']"
+        routerLinkActive="bg-light"
+      >
+        <mat-icon mat-list-icon>business</mat-icon>
+        <div mat-line>Bisnis</div>
+      </mat-list-item>
+
+      <mat-list-item
+        role="listitem"
+        [routerLink]="['/feeder/suggest']"
+        routerLinkActive="bg-light"
+      >
+        <mat-icon mat-list-icon>chat</mat-icon>
+        <div mat-line>Saran</div>
+      </mat-list-item>
+
+      <!--
+      <mat-list-item
+        role="listitem"
+        [routerLink]="['/feeder/broadcast']"
+        routerLinkActive="bg-light"
+      >
+        <mat-icon mat-list-icon>podcasts</mat-icon>
+        <div mat-line>Broadcast</div>
+      </mat-list-item>
+      -->
+
+      <mat-list-item
+        role="listitem"
+        [routerLink]="['/feeder/redeem']"
+        routerLinkActive="bg-light"
+      >
+        <mat-icon mat-list-icon>redeem</mat-icon>
+        <div mat-line>Redeem</div>
+      </mat-list-item>
+    </mat-list>
+  </mat-drawer>
+
+  <mat-drawer-content class="h-100">
+    <main class="content">
+      <router-outlet></router-outlet>
+    </main>
+  </mat-drawer-content>
+</mat-drawer-container>
+
+<app-footer></app-footer>

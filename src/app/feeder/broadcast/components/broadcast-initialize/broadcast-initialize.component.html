@@ -1,0 +1,62 @@
+<ng-container *ngIf="listing$ | async as listing">
+  <ng-container *ngIf="listing?.status == 'loaded'">
+    <div class="d-block mb-4 pb-3 border-bottom">
+      <div class="row">
+        <div class="col-12 col-md-6">
+          <mat-form-field appearance="outline" class="w-100">
+            <mat-label>Pilih Bisnis</mat-label>
+            <mat-select
+              [disabled]="listing?.status == 'loading'"
+              (selectionChange)="listingSelected($event)"
+              [(ngModel)]="listingValue"
+            >
+              <mat-option
+                *ngFor="let item of listing?.data?.results"
+                [value]="item.uuid"
+              >
+                {{ item.label }}
+              </mat-option>
+            </mat-select>
+          </mat-form-field>
+        </div>
+
+        <div class="col-12 col-md-6">
+          <mat-form-field appearance="outline" class="w-100">
+            <mat-label>Pilih Produk</mat-label>
+            <mat-select
+              [(ngModel)]="productValue"
+              [disabled]="
+                !product$ || (product$ | async)?.data?.results?.length == 0
+              "
+            >
+              <ng-container *ngIf="product$ | async as product">
+                <mat-option
+                  *ngFor="let item of product?.data?.results"
+                  [value]="item.uuid"
+                >
+                  {{ item.label }}
+                </mat-option>
+              </ng-container>
+            </mat-select>
+          </mat-form-field>
+        </div>
+      </div>
+
+      <div class="d-md-flex align-items-center w-100">
+        <div>Mulai broadcast ke "mantan" pelanggan</div>
+
+        <div class="ms-auto pt-2 pt-md-0">
+          <button
+            type="button"
+            mat-raised-button
+            color="primary"
+            [disabled]="!listingValue || !productValue"
+            (click)="addBroadcast()"
+          >
+            Buat Broadcast
+          </button>
+        </div>
+      </div>
+    </div>
+  </ng-container>
+</ng-container>

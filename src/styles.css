@@ -1,0 +1,62 @@
+/* You can add global styles to this file, and also import other style files */
+
+/* Bootstrap */
+@import "~bootstrap/dist/css/bootstrap.min.css";
+@import "~bootstrap/dist/css/bootstrap-utilities.min.css";
+
+html,
+body {
+  height: 100%;
+}
+
+body {
+  margin: 0;
+  font-family: Roboto, "Helvetica Neue", sans-serif;
+  background-color: #fafafa;
+}
+
+.prewrap {
+  white-space: pre-wrap;
+}
+
+.input-spinner {
+  top: -4px;
+  right: 6px;
+}
+
+main.content {
+  padding-top: 75px;
+}
+
+.mat-form-field-appearance-outline .mat-form-field-outline {
+  background-color: white;
+  border-radius: 5px;
+}
+
+.mat-card-header .mat-card-title {
+  font-size: 15px;
+  margin-bottom: 8px !important;
+}
+
+.mat-card-header .mat-card-subtitle {
+  font-size: 12px;
+}
+
+.mat-dialog-container {
+  margin-left: 15px;
+  margin-right: 15px;
+}
+
+.cdk-global-overlay-wrapper {
+  display: flex;
+  position: absolute;
+  z-index: 1000;
+  overflow: auto;
+  pointer-events: auto;
+}
+
+@media (max-width: 599px) {
+  main.content {
+    padding-top: 62px;
+  }
+}

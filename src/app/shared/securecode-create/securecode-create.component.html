@@ -1,0 +1,23 @@
+<form [formGroup]="formGroup" (ngSubmit)="onSubmit()">
+  <ng-container *ngIf="securecode$ | async as securecode">
+    <mat-form-field class="w-100" appearance="outline">
+      <mat-label>Alamat email</mat-label>
+      <input
+        matInput
+        type="email"
+        class="w-100"
+        placeholder="Masukkan alamat email Anda"
+        formControlName="issuer"
+      />
+
+      <button
+        mat-icon-button
+        matSuffix
+        type="submit"
+        [disabled]="formGroup.invalid || securecode?.status == 'loading'"
+      >
+        <mat-icon>arrow_forward</mat-icon>
+      </button>
+    </mat-form-field>
+  </ng-container>
+</form>

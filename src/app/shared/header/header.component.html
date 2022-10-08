@@ -1,0 +1,56 @@
+<header
+  class="header position-fixed top-0 start-0 end-0 mat-elevation-z3"
+  [ngStyle]="{ 'z-index': 11 }"
+>
+  <mat-toolbar color="primary" class="ps-0 pe-0">
+    <div class="container-fluid d-flex align-items-center">
+      <div class="d-flex align-items-center">
+        <button
+          *ngIf="currentScreenSize == 'Small'"
+          mat-icon-button
+          class="me-2"
+          (click)="closeMenu()"
+        >
+          <mat-icon>menu</mat-icon>
+        </button>
+
+        <span [routerLink]="['/home']">Kirim Saran</span>
+      </div>
+
+      <ng-container *ngIf="user$ | async as user">
+        <div *ngIf="user?.data?.token" class="ms-auto">
+          <button
+            mat-icon-button
+            class="ms-3"
+            [matMenuTriggerFor]="accountMenu"
+          >
+            <mat-icon>account_circle</mat-icon>
+          </button>
+
+          <mat-menu #accountMenu="matMenu" xPosition="before" class="mt-3">
+            <button mat-menu-item [routerLink]="['/profile']">
+              <mat-icon>badge</mat-icon>
+              <span>Profil</span>
+            </button>
+
+            <button mat-menu-item [routerLink]="['/security']">
+              <mat-icon>admin_panel_settings</mat-icon>
+              <span>Keamanan</span>
+            </button>
+
+            <button mat-menu-item (click)="signout()">
+              <mat-icon>logout</mat-icon>
+              <span>Keluar</span>
+            </button>
+          </mat-menu>
+        </div>
+      </ng-container>
+    </div>
+  </mat-toolbar>
+
+  <mat-progress-bar
+    *ngIf="loading"
+    mode="indeterminate"
+    color="accent"
+  ></mat-progress-bar>
+</header>

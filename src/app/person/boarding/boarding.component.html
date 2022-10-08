@@ -1,0 +1,17 @@
+<div class="container pt-4">
+  <ng-container>
+    <div class="row d-flex justify-content-center">
+      <div class="col-12 col-md-8 col-lg-6 col-xl-4">
+        <h1 *ngIf="challenge === 'validate_email'">
+          Alamat email harus divalidasi
+        </h1>
+        <h3 *ngIf="challenge === 'password_recovery'">
+          Masukkan alamat email akun Anda untuk me-reset password. Jika lupa
+          email silahkan hubungi kami.
+        </h3>
+
+        <app-securecode-create [challenge]="challenge"></app-securecode-create>
+      </div>
+    </div>
+  </ng-container>
+</div>

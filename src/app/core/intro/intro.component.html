@@ -1,0 +1,53 @@
+<div class="container pt-4">
+  <div class="row d-flex justify-content-center">
+    <div class="col-12 col-md-8 col-lg-6 col-xl-4">
+      <h1>Antisipasi kegagalan bisnis!</h1>
+      <h4 class="mb-1">Masukkan email untuk melanjutkan</h4>
+
+      <app-securecode-create
+        [challenge]="'validate_email'"
+      ></app-securecode-create>
+
+      <div class="border-top">
+        <h3 class="mt-3 pt-3">Umumnya ini yang terjadi</h3>
+      </div>
+
+      <p class="fw-bold">
+        Di minggu pertama buka sangat ramai. 2 minggu selanjutnya pelanggan
+        mulai menurun. Penyebabnya adalah:
+      </p>
+
+      <ol>
+        <li>
+          Tidak meminta saran dari mereka yang menjadi penentu kelangsungan
+          bisnis.
+        </li>
+
+        <li>
+          Produk tidak sesuai harapan pelanggan, mereka ingin memberi saran
+          tetapi bingung kemana.
+        </li>
+
+        <li>
+          Memberi saran di sosial media mengganggu privasi. Tidak jarang ulasan
+          negatif berujung <i>bullying</i>.
+        </li>
+
+        <li>Gagal menerima masukan dari pelanggan dengan cepat.</li>
+        <li>Gagal menjual ulang produk ke mantan pelanggan.</li>
+
+        <li>
+          Karena tidak tahu keluhan pelanggan, Anda tidak bisa memperbaiki
+          kualitas produk. Akhirnya pelanggan kabur.
+        </li>
+      </ol>
+
+      <div class="text-center">
+        <p class="border-top pt-3">Sudah punya akun?</p>
+        <button mat-raised-button color="primary" [routerLink]="['/signin']">
+          Masuk
+        </button>
+      </div>
+    </div>
+  </div>
+</div>

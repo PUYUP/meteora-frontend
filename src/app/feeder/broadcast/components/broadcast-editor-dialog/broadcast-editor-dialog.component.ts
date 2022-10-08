@@ -1,0 +1,22 @@
+import { Component, Inject, OnInit } from '@angular/core';
+import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
+
+@Component({
+  selector: 'app-broadcast-editor-dialog',
+  templateUrl: './broadcast-editor-dialog.component.html',
+  styleUrls: ['./broadcast-editor-dialog.component.css'],
+})
+export class BroadcastEditorDialogComponent implements OnInit {
+  constructor(
+    public dialogRef: MatDialogRef<BroadcastEditorDialogComponent>,
+    @Inject(MAT_DIALOG_DATA) public data: any
+  ) {}
+
+  ngOnInit(): void {}
+
+  receiveBroadcastEditorEvent(event: any): void {
+    if (event?.action == 'cancel') {
+      this.dialogRef.close();
+    }
+  }
+}

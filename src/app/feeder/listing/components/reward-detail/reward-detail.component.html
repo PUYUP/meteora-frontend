@@ -1,0 +1,106 @@
+<div class="container">
+  <div class="row">
+    <div class="col-12 col-sm-12 col-md-12 col-lg-12 col-xl-7">
+      <div class="d-flex align-items-center mb-3">
+        <button mat-icon-button class="me-2" (click)="back()">
+          <mat-icon>arrow_back</mat-icon>
+        </button>
+        <h3 class="mb-0">Rincian Hadiah</h3>
+      </div>
+
+      <ng-container *ngIf="reward$ | async as reward">
+        <ng-container *ngIf="reward?.data?.uuid">
+          <mat-card>
+            <table class="table">
+              <tbody>
+                <tr>
+                  <td class="w-25">Provider</td>
+                  <td>{{ reward?.data?.provider }}</td>
+                </tr>
+
+                <tr>
+                  <td class="w-25">Label</td>
+                  <td>{{ reward?.data?.label }}</td>
+                </tr>
+
+                <tr>
+                  <td class="w-25">Jumlah</td>
+                  <td>
+                    {{ reward?.data?.amount }}
+                    {{ reward?.data?.unit_slug }}
+                    ({{ reward?.data?.unit_label }})
+                  </td>
+                </tr>
+
+                <tr>
+                  <td class="w-25">Alokasi</td>
+                  <td>{{ reward?.data?.allocation }} saran</td>
+                </tr>
+
+                <tr>
+                  <td class="w-25">Fragmen</td>
+                  <td>{{ reward?.data?.content_object_label }}</td>
+                </tr>
+
+                <tr>
+                  <td class="w-25">Ketentuan</td>
+                  <td>
+                    {{ reward?.data?.term ? reward?.data?.term : "&mdash;" }}
+                  </td>
+                </tr>
+
+                <tr>
+                  <td class="w-25">Keterangan</td>
+                  <td>
+                    {{
+                      reward?.data?.description
+                        ? reward?.data?.description
+                        : "&mdash;"
+                    }}
+                  </td>
+                </tr>
+
+                <tr>
+                  <td class="w-25">Mulai</td>
+                  <td>
+                    {{ reward?.data?.start_at | date: "dd LLLL YYYY" }}
+                  </td>
+                </tr>
+
+                <tr>
+                  <td class="w-25">Berakhir</td>
+                  <td>
+                    {{ reward?.data?.expiry_at | date: "dd LLLL YYYY" }}
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+
+            <div class="d-flex w-100">
+              <button
+                type="button"
+                mat-button
+                color="warn"
+                [disabled]="reward?.status == 'loading'"
+                (click)="delete(reward?.data?.uuid)"
+              >
+                Hapus
+              </button>
+              <button
+                type="button"
+                mat-button
+                color="primary"
+                class="ms-auto"
+                (click)="edit(reward?.data)"
+                [disabled]="reward?.status == 'loading'"
+              >
+                Sunting
+              </button>
+            </div>
+          </mat-card>
+        </ng-container>
+      </ng-container>
+    </div>
+  </div>
+  &nbsp;
+</div>

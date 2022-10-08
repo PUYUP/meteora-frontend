@@ -1,0 +1,97 @@
+<div class="container">
+  <div class="row">
+    <div class="col-12 col-sm-12 col-md-12 col-lg-12 col-xl-7">
+      <!--
+      <app-broadcast-initialize></app-broadcast-initialize>
+      -->
+
+      <div class="d-flex w-100 align-items-center mb-4 pb-3 border-bottom">
+        <h3 class="mb-0">Daftar Broadcast</h3>
+        <button
+          type="button"
+          mat-raised-button
+          class="ms-auto"
+          color="primary"
+          [routerLink]="['/feeder/broadcast/create']"
+        >
+          <mat-icon>add</mat-icon>
+          <span class="ms-2">Broadcast</span>
+        </button>
+      </div>
+
+      <ng-container *ngIf="broadcast$ | async as broadcast">
+        <p
+          *ngIf="broadcast?.status == 'loading' && broadcast?.action == 'load'"
+          class="text-center"
+        >
+          Memuat data...
+        </p>
+
+        <p *ngIf="broadcast?.data?.results?.length == 0" class="text-center">
+          Belum ada broadcast
+        </p>
+
+        <mat-list role="list">
+          <ng-container *ngFor="let item of broadcast?.data?.results">
+            <mat-list-item
+              role="listitem"
+              [routerLink]="['/feeder/broadcast', item?.uuid]"
+              class="h-auto pt-2 pb-2"
+            >
+              <mat-icon mat-list-icon class="text-muted">podcasts</mat-icon>
+              <div mat-line class="fw-bold">{{ item?.label }}</div>
+
+              <div *ngIf="item.description" mat-line>
+                {{ item.description }}
+              </div>
+
+              <div mat-line>
+                <table class="borderless text-muted">
+                  <tbody>
+                    <tr>
+                      <td>Bisnis</td>
+                      <td class="ps-2">
+                        {{
+                          item?.listing_label ? item?.listing_label : "&mdash;"
+                        }}
+                      </td>
+                    </tr>
+
+                    <tr>
+                      <td>Produk</td>
+                      <td class="ps-2">
+                        {{
+                          item?.product_label ? item?.product_label : "&mdash;"
+                        }}
+                      </td>
+                    </tr>
+
+                    <tr>
+                      <td>Fragmen</td>
+                      <td class="ps-2">
+                        {{
+                          item?.fragment_label
+                            ? item?.fragment_label
+                            : "&mdash;"
+                        }}
+                      </td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+            </mat-list-item>
+          </ng-container>
+        </mat-list>
+
+        <mat-paginator
+          [disabled]="broadcast?.status == 'loading'"
+          [length]="broadcast?.data?.total"
+          [pageSize]="pageSize"
+          (page)="pageChangeEvent($event, broadcast?.data)"
+          aria-label="Select page"
+        >
+        </mat-paginator>
+      </ng-container>
+    </div>
+  </div>
+</div>

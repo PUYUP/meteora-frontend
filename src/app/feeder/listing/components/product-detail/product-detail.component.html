@@ -1,0 +1,67 @@
+<div class="container">
+  <div class="row">
+    <div class="col-12 col-sm-12 col-md-12 col-lg-12 col-xl-7">
+      <div class="d-flex align-items-center mb-3">
+        <button mat-icon-button class="me-2" (click)="back()">
+          <mat-icon>arrow_back</mat-icon>
+        </button>
+        <h3 class="mb-0">Rincian Produk</h3>
+      </div>
+
+      <ng-container *ngIf="product$ | async as product">
+        <ng-container *ngIf="product?.data?.uuid">
+          <mat-card>
+            <table class="table">
+              <tbody>
+                <tr>
+                  <td class="w-25">Nama</td>
+                  <td>{{ product?.data?.label }}</td>
+                </tr>
+
+                <tr>
+                  <td class="w-25">Keterangan</td>
+                  <td>
+                    {{
+                      product?.data?.description
+                        ? product?.data?.description
+                        : "&mdash;"
+                    }}
+                  </td>
+                </tr>
+
+                <tr>
+                  <td class="w-25">Bisnis</td>
+                  <td>{{ product?.data?.listing_label }}</td>
+                </tr>
+              </tbody>
+            </table>
+
+            <div class="d-flex w-100">
+              <button
+                type="button"
+                mat-button
+                color="warn"
+                [disabled]="product?.status == 'loading'"
+                (click)="delete(product?.data?.uuid)"
+              >
+                Hapus
+              </button>
+              <button
+                type="button"
+                mat-button
+                color="primary"
+                class="ms-auto"
+                (click)="edit(product?.data)"
+                [disabled]="product?.status == 'loading'"
+              >
+                Sunting
+              </button>
+            </div>
+          </mat-card>
+
+          <app-fragment-list [product_uuid]="productUUID"></app-fragment-list>
+        </ng-container>
+      </ng-container>
+    </div>
+  </div>
+</div>

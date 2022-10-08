@@ -1,0 +1,54 @@
+<div class="container pt-4">
+  <ng-container *ngIf="user$ | async as user">
+    <div class="row d-flex justify-content-center">
+      <div class="col-12 col-md-8 col-lg-6 col-xl-4">
+        <h1>Selamat datang kembali!</h1>
+
+        <form [formGroup]="formGroup" (ngSubmit)="onSubmit()">
+          <mat-form-field class="w-100" appearance="outline">
+            <mat-label>Nama pengguna atau email</mat-label>
+            <input matInput type="username" formControlName="username" />
+          </mat-form-field>
+
+          <mat-form-field class="w-100" appearance="outline">
+            <mat-label>Password</mat-label>
+            <input matInput type="password" formControlName="password" />
+          </mat-form-field>
+
+          <div class="d-flex align-items-center">
+            <div>
+              <div>
+                Belum punya akun?
+                <a
+                  [routerLink]="['/boarding']"
+                  [queryParams]="{ challenge: 'validate_email' }"
+                  >Daftar</a
+                >
+              </div>
+
+              <div>
+                Lupa password
+                <a
+                  [routerLink]="['/boarding']"
+                  [queryParams]="{ challenge: 'password_recovery' }"
+                  >reset disini</a
+                >
+              </div>
+            </div>
+
+            <div class="text-end ms-auto">
+              <button
+                mat-raised-button
+                type="submit"
+                color="primary"
+                [disabled]="formGroup.invalid || user?.status == 'loading'"
+              >
+                Masuk ke Akun
+              </button>
+            </div>
+          </div>
+        </form>
+      </div>
+    </div>
+  </ng-container>
+</div>

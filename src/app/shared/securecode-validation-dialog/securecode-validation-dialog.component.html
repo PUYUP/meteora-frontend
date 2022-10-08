@@ -1,0 +1,16 @@
+<p>
+  This action need validation. Secure code send to
+  <strong>{{ data.issuer }}</strong>
+</p>
+
+<app-securecode-validation
+  [token]="data.token"
+  [challenge]="data.challenge"
+  [issuer]="data.issuer"
+  mode="dialog"
+>
+</app-securecode-validation>
+
+<div mat-dialog-actions>
+  <button mat-raised-button (click)="cancel()">Cancel</button>
+</div>

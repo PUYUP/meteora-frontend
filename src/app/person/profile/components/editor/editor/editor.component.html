@@ -1,0 +1,82 @@
+<ng-container *ngIf="user$ | async as user">
+  <input
+    type="file"
+    class="file-input"
+    accept="image/*"
+    (change)="onFileSelected($event)"
+    class="d-none"
+    #fileUpload
+  />
+
+  <div class="text-center p-4">
+    <div class="ratio ratio-1x1 w-25 ms-auto me-auto">
+      <img
+        [src]="
+          user?.data?.user?.profile?.picture
+            ? user?.data?.user?.profile?.picture
+            : 'assets/images/default-placeholder.png'
+        "
+        class="rounded-circle shadow-md"
+      />
+    </div>
+
+    <div class="mt-4">
+      <mat-spinner
+        *ngIf="uploadProgress"
+        diameter="40"
+        class="ms-auto me-auto"
+      ></mat-spinner>
+
+      <button
+        *ngIf="!uploadProgress"
+        mat-icon-button
+        color="primary"
+        (click)="fileUpload.click()"
+        [disabled]="uploadProgress"
+      >
+        <mat-icon>upload</mat-icon>
+      </button>
+    </div>
+  </div>
+
+  <form [formGroup]="formGroup" (ngSubmit)="onSubmit()">
+    <mat-form-field appearance="outline" class="w-100">
+      <mat-label>Nama lengkap</mat-label>
+      <input
+        matInput
+        formControlName="first_name"
+        placeholder="Nama lengkap Anda"
+      />
+    </mat-form-field>
+
+    <mat-form-field appearance="outline" class="w-100">
+      <mat-label>Slogan</mat-label>
+      <input
+        matInput
+        formControlName="headline"
+        placeholder="Contoh: Indonesia Hebat!"
+      />
+    </mat-form-field>
+
+    <mat-form-field appearance="outline" class="w-100">
+      <mat-label>Tentang</mat-label>
+      <textarea
+        matInput
+        formControlName="about"
+        [mat-autosize]="true"
+        rows="4"
+        placeholder="Infokan siapa Anda"
+      ></textarea>
+    </mat-form-field>
+
+    <div class="text-end">
+      <button
+        mat-raised-button
+        color="primary"
+        [disabled]="formGroup.invalid || user?.status == 'loading'"
+      >
+        Simpan Profil
+      </button>
+    </div>
+  </form>
+</ng-container>

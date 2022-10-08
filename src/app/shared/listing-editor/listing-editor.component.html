@@ -1,0 +1,38 @@
+<ng-container *ngIf="listing$ | async as listing">
+  <form [formGroup]="formGroup" (ngSubmit)="onSubmit()">
+    <mat-form-field appearance="outline" class="w-100">
+      <mat-label>Nama bisnis</mat-label>
+      <input
+        matInput
+        formControlName="label"
+        placeholder="Contoh: Coffe Bean's"
+      />
+    </mat-form-field>
+
+    <mat-form-field appearance="outline" class="w-100">
+      <mat-label>Keterangan</mat-label>
+      <textarea
+        matInput
+        formControlName="description"
+        placeholder="Informasi bisnis"
+        [mat-autosize]="true"
+        rows="3"
+      ></textarea>
+    </mat-form-field>
+
+    <div class="d-flex w-100">
+      <button type="button" mat-button color="warn" (click)="cancel()">
+        Cancel
+      </button>
+      <button
+        type="submit"
+        mat-raised-button
+        color="primary"
+        class="ms-auto"
+        [disabled]="formGroup.invalid || listing?.status == 'loading'"
+      >
+        {{ data ? "Perbarui" : "Simpan" }} Bisnis
+      </button>
+    </div>
+  </form>
+</ng-container>

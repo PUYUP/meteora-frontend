@@ -1,0 +1,47 @@
+<div class="container pt-4">
+  <ng-container *ngIf="user$ | async as user">
+    <div class="row d-flex justify-content-center">
+      <div class="col-12 col-md-8 col-lg-6 col-xl-4">
+        <h1>Satu langkah lagi akun selesai dibuat</h1>
+
+        <form [formGroup]="formGroup" (ngSubmit)="onSubmit()">
+          <mat-form-field class="w-100" appearance="outline">
+            <mat-label>Alamat email</mat-label>
+            <input matInput type="email" formControlName="email" />
+          </mat-form-field>
+
+          <mat-form-field class="w-100" appearance="outline">
+            <mat-label>Nama pengguna</mat-label>
+            <input
+              matInput
+              type="text"
+              formControlName="username"
+              placeholder="Contoh: jaka123"
+            />
+          </mat-form-field>
+
+          <mat-form-field class="w-100" appearance="outline">
+            <mat-label>Password</mat-label>
+            <input matInput type="password" formControlName="password" />
+          </mat-form-field>
+
+          <mat-form-field class="w-100" appearance="outline">
+            <mat-label>Ulangi password</mat-label>
+            <input matInput type="password" formControlName="retype_password" />
+          </mat-form-field>
+
+          <div class="text-end">
+            <button
+              mat-raised-button
+              type="submit"
+              color="primary"
+              [disabled]="formGroup.invalid || user?.status == 'loading'"
+            >
+              Selesaikan Pendaftaran
+            </button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </ng-container>
+</div>

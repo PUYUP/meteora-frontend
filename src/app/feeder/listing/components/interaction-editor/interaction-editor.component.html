@@ -1,0 +1,27 @@
+<form [formGroup]="formGroup" (ngSubmit)="onSubmit()">
+  <mat-form-field appearance="outline" class="w-100">
+    <mat-label>Isi tanggapan</mat-label>
+    <textarea
+      matInput
+      formControlName="description"
+      placeholder="Apa tanggapan Anda?"
+      [mat-autosize]="true"
+      rows="3"
+    ></textarea>
+  </mat-form-field>
+
+  <div class="d-flex w-100">
+    <button type="button" mat-button color="warn" (click)="cancel()">
+      Cancel
+    </button>
+    <button
+      type="submit"
+      mat-raised-button
+      color="primary"
+      class="ms-auto"
+      [disabled]="formGroup.invalid"
+    >
+      {{ data?.uuid ? "Perbarui" : "Kirim" }}
+    </button>
+  </div>
+</form>

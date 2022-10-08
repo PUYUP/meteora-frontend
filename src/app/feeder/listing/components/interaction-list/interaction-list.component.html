@@ -1,0 +1,60 @@
+<ng-container *ngIf="interactions$ | async as interaction">
+  <p
+    *ngIf="interaction?.status == 'loading' && interaction?.action == 'load'"
+    class="text-center"
+  >
+    Memuat data...
+  </p>
+
+  <p *ngIf="interaction?.data?.results?.length == 0" class="text-center">
+    Belum ada data.
+  </p>
+
+  <ng-container *ngIf="interaction?.data?.results?.length > 0">
+    <mat-list class="mb-4">
+      <mat-list-item
+        *ngFor="let item of interaction?.data?.results"
+        class="h-auto pb-2 mb-2"
+      >
+        <div [ngStyle]="{ 'white-space': 'normal' }" mat-line>
+          <div [innerHTML]="item.description"></div>
+        </div>
+
+        <div
+          *ngIf="!item.is_product_owner"
+          mat-line
+          class="small text-danger mt-1"
+        >
+          <mat-chip-list>
+            <mat-chip class="small"> Pelanggan </mat-chip>
+          </mat-chip-list>
+        </div>
+
+        <mat-icon
+          *ngIf="item.is_product_owner"
+          mat-list-icon
+          class="text-muted"
+        >
+          chat_bubble_outline
+        </mat-icon>
+
+        <mat-icon
+          *ngIf="!item.is_product_owner"
+          mat-list-icon
+          class="text-muted"
+        >
+          forum
+        </mat-icon>
+      </mat-list-item>
+    </mat-list>
+  </ng-container>
+
+  <mat-paginator
+    [disabled]="interaction?.status == 'loading'"
+    [length]="interaction?.data?.total"
+    [pageSize]="pageSize"
+    (page)="pageChangeEvent($event, interaction?.data)"
+    aria-label="Select page"
+  >
+  </mat-paginator>
+</ng-container>

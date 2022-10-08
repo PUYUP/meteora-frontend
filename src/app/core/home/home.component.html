@@ -1,0 +1,75 @@
+<div class="container">
+  <div class="row">
+    <div class="col-12 col-sm-12 col-md-12 col-lg-12 col-xl-10">
+      <ng-container *ngIf="stat$ | async as stat">
+        <div class="row">
+          <div class="col-12 col-xs-12 col-sm-6 col-md-4">
+            <div class="card mb-3">
+              <div class="card-body">
+                <h3 class="card-title mb-2">Bisnis Saya</h3>
+                <p class="card-text">
+                  {{ stat.data?.count?.listing }}
+                </p>
+              </div>
+            </div>
+          </div>
+
+          <div class="col-12 col-xs-12 col-sm-6 col-md-4">
+            <div class="card mb-3">
+              <div class="card-body">
+                <h3 class="card-title mb-2">Produk</h3>
+                <p class="card-text">
+                  {{ stat.data?.count?.product }}
+                </p>
+              </div>
+            </div>
+          </div>
+
+          <div class="col-12 col-xs-12 col-sm-6 col-md-4">
+            <div class="card mb-3">
+              <div class="card-body">
+                <h3 class="card-title mb-2">Saran Masuk</h3>
+                <p class="card-text">
+                  {{ stat.data?.count?.suggest }}
+                </p>
+              </div>
+            </div>
+          </div>
+
+          <div class="col-12 col-xs-12 col-sm-6 col-md-4">
+            <div class="card mb-3">
+              <div class="card-body">
+                <h3 class="card-title mb-2">Total Redeem</h3>
+                <p class="card-text">
+                  {{ stat.data?.count?.redeem_total }}
+                </p>
+              </div>
+            </div>
+          </div>
+
+          <div class="col-12 col-xs-12 col-sm-6 col-md-4">
+            <div class="card mb-3">
+              <div class="card-body">
+                <h3 class="card-title mb-2">Redeem Diminta</h3>
+                <p class="card-text">
+                  {{ stat.data?.count?.redeem_requested }}
+                </p>
+              </div>
+            </div>
+          </div>
+
+          <div class="col-12 col-xs-12 col-sm-6 col-md-4">
+            <div class="card mb-3">
+              <div class="card-body">
+                <h3 class="card-title mb-2">Redeem Selesai</h3>
+                <p class="card-text">
+                  {{ stat.data?.count?.redeem_accepted }}
+                </p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </ng-container>
+    </div>
+  </div>
+</div>
